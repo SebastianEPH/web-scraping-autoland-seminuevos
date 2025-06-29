@@ -1,22 +1,32 @@
 import { WebScrapingService } from '../web-scraping.service';
 import promiseLimit from 'promise-limit';
-import { inject, injectable } from 'inversify';
+import {inject, injectable, named} from 'inversify';
 import { TYPES } from '../../type';
 import { AutolandProvider } from '../../provider/autoland-provider';
 import { FileUtil } from '../../utils/file';
 import { VehiculosInformation } from '../../interface/autoland-provider.interface';
 import { AutolandUniqueInformation } from '../../interface/autoland-unique.information.interface';
+import {AutosRepository} from "../../repository/autos.repository";
+import {TAG} from "../../tag";
 
 @injectable()
 export class WebScrapingServiceImpl implements WebScrapingService {
 	private readonly limit = promiseLimit(3);
 
-	constructor(@inject(TYPES.AutolandProvider) private autoland: AutolandProvider) {}
+	constructor(
+		@inject(TYPES.AutolandProvider) private autoland: AutolandProvider,
+		@inject(TYPES.Repository)  @named(TAG.AUTO) private repositoryAutos: AutosRepository,
+		) {}
 
 	async init(): Promise<void> {
 		const { body } = await this.autoland.listSeminuevos();
 		const promise: Promise<unknown>[] = body.data.map((vahiculo) => this.limit(() => this.process(vahiculo)));
 		await Promise.all(promise);
+	}
+
+	async  saveDatabaseOnlyTest (informationVehicule:VehiculosInformation): Promise<void> {
+		await this.repositoryAutos.create(informationVehicule)
+
 	}
 
 	private async process(information: VehiculosInformation): Promise<void> {

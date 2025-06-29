@@ -9,4 +9,11 @@ export class Controller {
 	async generateData(): Promise<any> {
 		await this.service.init();
 	}
+	async testSaveDatabase(): Promise<any> {
+		try{
+			await this.service.saveDatabaseOnlyTest();
+		}catch (e) {
+			console.log("Error controller agarrar,", e )
+		}
+	}
 }

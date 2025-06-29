@@ -1,6 +1,6 @@
 {
   "name": "web-scraping-autoland-seminuevos",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "",
   "main": "src/index.ts",
   "keywords": [],
@@ -19,15 +19,21 @@
     "format:fix": "prettier --write {src,test}/**"
   },
   "dependencies": {
+    "dotenv": "16.4.7",
     "axios": "1.10.0",
+    "mysql2": "3.14.1",
     "promise-limit": "2.7.0",
     "reflect-metadata": "0.2.2",
+    "bunyan": "1.8.15",
+    "bunyan-format": "0.2.1",
     "inversify": "6.0.2"
   },
   "devDependencies": {
-    "@types/node": "22.13.10",
+    "@types/node": "24.0.7",
     "@typescript-eslint/eslint-plugin": "8.26.0",
     "jest": "29.7.0",
+    "@types/bunyan": "1.8.11",
+    "@types/bunyan-format": "0.2.9",
     "ts-node-dev": "2.0.0",
     "prettier": "3.5.3",
     "eslint-config-prettier": "10.1.1",
