@@ -17,7 +17,7 @@ export class AutolandSeminuevosServiceImpl implements AutolandSeminuevosService 
 	public async proccess(autolandSeminuevos: AutolandSeminuevosModel): Promise<void> {
 		const { name, urlImg, licencePlate } = autolandSeminuevos;
 
-		await this.saveImagen([name], urlImg, name);
+		await this.saveImagen(urlImg, name);
 		this.storage.saveJson(name, autolandSeminuevos);
 		const { body } = await this.autolandProvider.getInformation(licencePlate);
 		await this.generateDataExterior(body, name);
