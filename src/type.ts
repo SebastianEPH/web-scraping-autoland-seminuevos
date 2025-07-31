@@ -7,5 +7,5 @@ export const TYPES = {
 	Handler: Symbol.for('Handler'),
 	Service: Symbol.for('Service'),
 
-	DatabaseClient:  Symbol.for('DatabaseClient'),
+	DatabaseClient: Symbol.for('DatabaseClient'),
 };

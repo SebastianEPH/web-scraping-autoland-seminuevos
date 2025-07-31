@@ -1,5 +1,5 @@
 import { ToUser } from './response-to-user.interface';
-import {HTTP} from "../common/enum";
+import { HTTP } from '../common/enum';
 
 export interface ErrorMetadata {
 	origin?: string;

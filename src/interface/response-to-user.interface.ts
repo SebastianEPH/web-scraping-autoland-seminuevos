@@ -1,4 +1,4 @@
-import {FILTER_SORT} from "../common/database.enum";
+import { FILTER_SORT } from '../common/database.enum';
 
 export interface Filters {
 	page: number;
@@ -76,7 +76,6 @@ export class ToUser<T> {
 			next,
 		};
 	}
-
 
 	public setFiltersAcceptDateCreate(): void {
 		this.dropdown = {

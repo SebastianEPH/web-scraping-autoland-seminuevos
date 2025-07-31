@@ -8,10 +8,10 @@ import { TYPES } from './type';
 import { Controller } from './controller/controller';
 import { WebScrapingService } from './service/web-scraping.service';
 import { WebScrapingServiceImpl } from './service/impl/web-scraping.service.impl';
-import {createPool, Pool} from "mysql2/promise";
-import {Environment} from "./utils/constants-env.util";
-import {AutosRepository} from "./repository/autos.repository";
-import {AutosImplRepository} from "./repository/impl/autos.impl.repository";
+import { createPool, Pool } from 'mysql2/promise';
+import { Environment } from './utils/constants-env.util';
+import { AutosRepository } from './repository/autos.repository';
+import { AutosImplRepository } from './repository/impl/autos.impl.repository';
 
 export const createContainer = (): Container => {
 	const container: Container = new Container();

@@ -1,7 +1,6 @@
-import {FILTER_SORT} from "../common/database.enum";
-import {queryCommons} from "../common/query.commons";
-import {Column, POSITION} from "../common/enum";
-
+import { FILTER_SORT } from '../common/database.enum';
+import { queryCommons } from '../common/query.commons';
+import { Column, POSITION } from '../common/enum';
 
 export class DatabaseUtil {
 	public static filterSortDate(tableName: string, sort: FILTER_SORT): string {

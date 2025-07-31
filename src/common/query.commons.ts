@@ -1,4 +1,4 @@
-import {Column} from "./enum";
+import { Column } from './enum';
 
 export const queryCommons = {
 	page: (page: string | number, limit: string | number): string =>

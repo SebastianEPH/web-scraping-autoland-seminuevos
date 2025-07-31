@@ -1,5 +1,5 @@
-import {ENV, NODE_ENV} from "../common/enum";
-// import 'dotenv/config';
+import { ENV, NODE_ENV } from '../common/enum';
+import 'dotenv/config';
 
 export class Environment {
 	/* SERVER CONFIG */

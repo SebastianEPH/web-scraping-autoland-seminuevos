@@ -1,7 +1,6 @@
-import {HTTP} from "../common/enum";
-import {ToUser} from "../interface/response-to-user.interface";
-import {ErrorMetadata, ExceptionInformation} from "../interface/error-metadata.interface";
-
+import { HTTP } from '../common/enum';
+import { ToUser } from '../interface/response-to-user.interface';
+import { ErrorMetadata, ExceptionInformation } from '../interface/error-metadata.interface';
 
 export class DatabaseException extends Error {
 	public readonly statusCode: HTTP = HTTP.STATUS_CODE_500;

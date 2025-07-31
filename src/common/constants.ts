@@ -1,4 +1,4 @@
-import { HEADERS,  VALUE } from './enum';
+import { HEADERS, VALUE } from './enum';
 
 export const READERS_RESPONSE = {
 	[HEADERS.CONTENT_TYPE]: VALUE.APPLICATION_JSON,

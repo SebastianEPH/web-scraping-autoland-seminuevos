@@ -1,6 +1,7 @@
 import { WebScrapingService } from '../service/web-scraping.service';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../type';
+import { VehiclesAutoLandInformation } from '../interface/autoland-provider.interface';
 
 @injectable()
 export class Controller {
@@ -10,10 +11,14 @@ export class Controller {
 		await this.service.init();
 	}
 	async testSaveDatabase(): Promise<any> {
-		try{
-			await this.service.saveDatabaseOnlyTest();
-		}catch (e) {
-			console.log("Error controller agarrar,", e )
+		try {
+			const informationVehicule: VehiclesAutoLandInformation = {
+				nombre: 'hoola',
+			} as any;
+
+			await this.service.saveDatabaseOnlyTest(informationVehicule);
+		} catch (e) {
+			console.log('Error controller agarrar,', e);
 		}
 	}
 }

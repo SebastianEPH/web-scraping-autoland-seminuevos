@@ -57,7 +57,6 @@ export enum CURRENCY {
 	PEN = 'PEN',
 }
 
-
 export enum BOOLEAN_STRING {
 	TRUE = 'true',
 	FALSE = 'false',
@@ -183,7 +182,6 @@ export enum BooleanDatabase {
 	YES = 'true',
 	NO = 'false',
 }
-
 
 export enum YEAR {
 	_2023 = 2023,

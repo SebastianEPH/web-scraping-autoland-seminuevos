@@ -1,9 +1,9 @@
 export interface AutolandSeminuevosProviderResponse {
-	data: VehiculosInformation[];
+	data: VehiclesAutoLandInformation[];
 	filter: Filter;
 }
 
-export interface VehiculosInformation {
+export interface VehiclesAutoLandInformation {
 	id: number;
 	nombre: string;
 	descrip: string;

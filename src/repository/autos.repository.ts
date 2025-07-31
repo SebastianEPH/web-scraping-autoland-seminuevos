@@ -1,5 +1,5 @@
-import {VehiculosInformation} from "../interface/autoland-provider.interface";
+import { VehiclesAutoLandInformation } from '../interface/autoland-provider.interface';
 
 export interface AutosRepository {
-    create(informationVehicule:VehiculosInformation): Promise<any>;
+	create(informationVehicule: VehiclesAutoLandInformation): Promise<any>;
 }
