@@ -1,5 +1,9 @@
 export const TAG = {
-	ProviderAutoland: 'ProviderAutoland',
+	Autoland: 'Autoland',
 
+	WebScraping: 'WebScraping',
+
+	StorageLocal: 'StorageLocal',
+	StorageBackblazeB2: 'StorageBackblazeB2',
 	AUTO: 'AUTO',
 };

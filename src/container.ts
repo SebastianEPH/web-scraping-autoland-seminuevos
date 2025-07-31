@@ -12,6 +12,10 @@ import { createPool, Pool } from 'mysql2/promise';
 import { Environment } from './utils/constants-env.util';
 import { AutosRepository } from './repository/autos.repository';
 import { AutosImplRepository } from './repository/impl/autos.impl.repository';
+import { AutolandSeminuevosService } from './service/autoland-seminuevos.service';
+import { AutolandSeminuevosServiceImpl } from './service/impl/autoland-seminuevos.service.impl';
+import { FilesStorage } from './storage/files.storage';
+import { FilesStorageLocalImpl } from './storage/impl/files.storage.local';
 
 export const createContainer = (): Container => {
 	const container: Container = new Container();
@@ -20,11 +24,20 @@ export const createContainer = (): Container => {
 		timeout: TIMEOUT.PROVIDER,
 	});
 	container.bind<Controller>(TYPES.Handler).to(Controller);
-	container.bind<WebScrapingService>(TYPES.Service).to(WebScrapingServiceImpl);
+	container.bind<WebScrapingService>(TYPES.Service).to(WebScrapingServiceImpl).whenTargetNamed(TAG.WebScraping);
+	container
+		.bind<AutolandSeminuevosService>(TYPES.Service)
+		.to(AutolandSeminuevosServiceImpl)
+		.whenTargetNamed(TAG.Autoland);
+	container.bind<FilesStorage>(TYPES.Storage).to(FilesStorageLocalImpl); //.whenTargetNamed(TAG.Autoland);
+
+	container.bind<string>(TYPES.Storage).toConstantValue('/rutaa').whenTargetNamed(TAG.StorageLocal);
+	container.bind<string>(TYPES.Storage).toConstantValue('/rutaa/new').whenTargetNamed(TAG.StorageBackblazeB2);
+
 	container
 		.bind<ApiConnectorUtil>(TYPES.ApiConnectorUtil)
 		.toConstantValue(apiConnectorAutolandSeminuevos)
-		.whenTargetNamed(TAG.ProviderAutoland);
+		.whenTargetNamed(TAG.Autoland);
 	container.bind<AutolandProvider>(TYPES.AutolandProvider).to(AutolandProviderImpl);
 
 	/* Database */

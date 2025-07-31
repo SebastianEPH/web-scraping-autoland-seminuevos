@@ -1,11 +1,12 @@
 import { WebScrapingService } from '../service/web-scraping.service';
-import { inject, injectable } from 'inversify';
+import { inject, injectable, named } from 'inversify';
 import { TYPES } from '../type';
 import { VehiclesAutoLandInformation } from '../interface/autoland-provider.interface';
+import { TAG } from '../tag';
 
 @injectable()
 export class Controller {
-	constructor(@inject(TYPES.Service) private service: WebScrapingService) {}
+	constructor(@inject(TYPES.Service) @named(TAG.WebScraping) private service: WebScrapingService) {}
 
 	async generateData(): Promise<any> {
 		await this.service.init();

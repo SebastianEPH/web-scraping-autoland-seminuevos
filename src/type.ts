@@ -6,6 +6,6 @@ export const TYPES = {
 	Repository: Symbol.for('Repository'),
 	Handler: Symbol.for('Handler'),
 	Service: Symbol.for('Service'),
-
+	Storage: Symbol.for('Storage'),
 	DatabaseClient: Symbol.for('DatabaseClient'),
 };

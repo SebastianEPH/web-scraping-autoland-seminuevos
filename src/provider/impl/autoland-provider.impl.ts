@@ -9,7 +9,7 @@ import { AutolandUniqueInformation } from '../../interface/autoland-unique.infor
 
 @injectable()
 export class AutolandProviderImpl implements AutolandProvider {
-	constructor(@inject(TYPES.ApiConnectorUtil) @named(TAG.ProviderAutoland) private api: ApiConnectorUtil) {}
+	constructor(@inject(TYPES.ApiConnectorUtil) @named(TAG.Autoland) private api: ApiConnectorUtil) {}
 
 	public async listSeminuevos(): Promise<ResponseProvider<AutolandSeminuevosProviderResponse>> {
 		const endpoint: string = `/api-seminuevos-data`;
