@@ -19,16 +19,34 @@ export class WebScrapingServiceImpl implements WebScrapingService {
 	) {}
 
 	async init(): Promise<void> {
-		const {
-			body: { data: vehiclesList },
-		} = await this.autoland.listSeminuevos();
+		// const {
+		// 	body: { data: vehiclesList },
+		// } = await this.autoland.listSeminuevos();
 
-		const promiseVehiclesList: Promise<unknown>[] = vehiclesList.map((vehicle: VehiclesAutoLandInformation) => {
-			return this.limit(() => {
-				return this.serviceAutoland.proccess(vehicle);
-			});
+		// const promiseVehiclesList: Promise<unknown>[] = vehiclesList.map((vehicle: VehiclesAutoLandInformation) => {
+		// 	return this.limit(() => {
+		// 		return this.serviceAutoland.proccess(vehicle);
+		// 	});
+		// });
+		// await Promise.all(promiseVehiclesList);
+
+		await this.serviceAutoland.proccess({
+			'id': 361429,
+			'nombre': 'CX-5 HIGH 2.0 AT AWD IPM',
+			'descrip': 'CX-5 HIGH 2.0 AT AWD IPM',
+			'kilometraje': '53124',
+			'tipo_caja': 'Automatica',
+			'combustible': 'GASOLINA',
+			'anio': '2024',
+			'modelo': 'CX-5 HIGH 2.0 AT AWD IPM',
+			'placa': 'CJN250',
+			'precio_soles': '',
+			'precio_dolares': '28,900',
+			'categoria': 'SUV',
+			'marca': 'MAZDA',
+			'imagen': 'https:\/\/autoland.com.pe\/wp-content\/uploads\/2025\/06\/113632_0.jpg',
+			'url': 'https:\/\/autoland.com.pe\/seminuevo\/cx-5-high-2-0-at-awd-ipm\/',
 		});
-		await Promise.all(promiseVehiclesList);
 	}
 
 	// private async process(information: VehiclesAutoLandInformation): Promise<void> {

@@ -8,7 +8,7 @@ import {
 } from '../interface/database/vehicles-table.interface';
 import { AutolandUniqueInformation } from '../interface/autoland-unique.information.interface';
 
-interface ImagenProperties {
+export interface ImagenProperties {
 	urlOriginal?: string;
 	urlSave?: string;
 	nameFile?: string;
@@ -20,7 +20,6 @@ interface ImageData {
 	information?: {
 		s3PRefix?: string;
 		exteriorLength: number;
-		interiorLength: number;
 	};
 }
 
@@ -49,7 +48,6 @@ export class AutolandSeminuevosModel {
 			information: {
 				s3PRefix: '',
 				exteriorLength: 0,
-				interiorLength: 0,
 			},
 		};
 	}

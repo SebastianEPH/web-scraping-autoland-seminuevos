@@ -63,6 +63,7 @@ export interface Options {
 	needs_assessment_quiz: boolean;
 	numImgCloseup: number;
 	numImgEC: number;
+	numImgI: number;
 	previous_version: string;
 	s3_folder: string;
 	show_powered_by_impel: boolean;
