@@ -45,9 +45,9 @@ export class ApiConnectorUtil {
 				statusCode: OthersMapper.parseStatusCodeForAxios(error.response?.status),
 				body: error.response?.data,
 				headers: error.response?.headers,
-				// config: error.response?.config,
-				// request: error.response?.request,
-			} as any;
+				config: error.response?.config,
+				request: error.response?.request,
+			};
 		}
 	}
 
@@ -71,14 +71,14 @@ export class ApiConnectorUtil {
 				request,
 			};
 		} catch (error) {
-			console.log('ApiConnectorUtil | GET FILE | Error in call provider', JSON.stringify(error));
+			console.log('ApiConnectorUtil | GET FILE | Error in call provider');
 			return {
 				statusCode: OthersMapper.parseStatusCodeForAxios(error.response?.status),
-				// body: error.response?.data,
-				// headers: error.response?.headers,
-				// config: error.response?.config,
+				body: error.response?.data,
+				headers: error.response?.headers,
+				config: error.response?.config,
 				request: error.response?.request,
-			} as any;
+			};
 		}
 	}
 

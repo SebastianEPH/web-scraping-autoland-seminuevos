@@ -9,7 +9,11 @@ export class Controller {
 	constructor(@inject(TYPES.Service) @named(TAG.WebScraping) private service: WebScrapingService) {}
 
 	async generateData(): Promise<any> {
-		await this.service.init();
+		try {
+			await this.service.init();
+		} catch (e) {
+			console.log('Error controller agarrar===============,', e);
+		}
 	}
 	async testSaveDatabase(): Promise<any> {
 		try {
@@ -17,7 +21,7 @@ export class Controller {
 				nombre: 'hoola',
 			} as any;
 
-			await this.service.saveDatabaseOnlyTest(informationVehicule);
+			// await this.service.saveDatabaseOnlyTest(informationVehicule);
 		} catch (e) {
 			console.log('Error controller agarrar,', e);
 		}

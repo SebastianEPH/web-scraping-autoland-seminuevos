@@ -12,7 +12,7 @@ import { FilesStorage } from './storage/files.storage';
 import { ApiConnectorUtil } from './utils/api-connector';
 import { Controller } from './controller/controller';
 import { createPool, Pool } from 'mysql2/promise';
-import { Container } from 'inversify';
+import { Container, interfaces } from 'inversify';
 import { TIMEOUT } from './common/enum';
 import { TYPES } from './type';
 import { TAG } from './tag';
@@ -23,11 +23,22 @@ export const createContainer = (): Container => {
 		host: `https://autoland.com.pe`,
 		timeout: TIMEOUT.PROVIDER,
 	});
+	/* Repository */
+	container.bind<AutosRepository>(TYPES.Repository).to(AutosImplRepository).whenTargetNamed(TAG.AUTO);
+
 	container.bind<Controller>(TYPES.Handler).to(Controller);
 	container.bind<WebScrapingService>(TYPES.Service).to(WebScrapingServiceImpl).whenTargetNamed(TAG.WebScraping);
 	container
-		.bind<AutolandSeminuevosService>(TYPES.Service)
-		.to(AutolandSeminuevosServiceImpl)
+		.bind<interfaces.Factory<AutolandSeminuevosService>>(TYPES.Service)
+		.toFactory<AutolandSeminuevosService>((context: interfaces.Context) => {
+			return () => {
+				return new AutolandSeminuevosServiceImpl(
+					context.container.getNamed<AutosRepository>(TYPES.Repository, TAG.AUTO),
+					context.container.get<AutolandProvider>(TYPES.AutolandProvider),
+					context.container.get<FilesStorage>(TYPES.Storage),
+				);
+			};
+		})
 		.whenTargetNamed(TAG.Autoland);
 	container.bind<FilesStorage>(TYPES.Storage).to(FilesStorageLocalImpl);
 
@@ -53,9 +64,6 @@ export const createContainer = (): Container => {
 		connectionLimit: +Environment.DATABASE_MYSQL_CONNECTION_LIMIT,
 	});
 	container.bind<Pool>(TYPES.DatabaseClient).toConstantValue(connection);
-
-	/* Repository */
-	container.bind<AutosRepository>(TYPES.Repository).to(AutosImplRepository).whenTargetNamed(TAG.AUTO);
 
 	return container;
 };

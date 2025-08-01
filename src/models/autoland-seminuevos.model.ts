@@ -17,10 +17,6 @@ export interface ImagenProperties {
 interface ImageData {
 	exterior: ImagenProperties[];
 	interior: ImagenProperties[];
-	information?: {
-		s3PRefix?: string;
-		exteriorLength: number;
-	};
 }
 
 export class AutolandSeminuevosModel {
@@ -45,10 +41,6 @@ export class AutolandSeminuevosModel {
 		this.image = {
 			exterior: [],
 			interior: [],
-			information: {
-				s3PRefix: '',
-				exteriorLength: 0,
-			},
 		};
 	}
 	public fromWeb({
@@ -196,11 +188,11 @@ export class AutolandSeminuevosModel {
 			'ram': CarBrand.Ram,
 			'cadillac': CarBrand.Cadillac,
 			'buick': CarBrand.Buick,
+			'lamborghini': CarBrand.Lamborghini,
 			'gmc': CarBrand.Gmc,
 			'mini': CarBrand.Mini,
 			'smart': CarBrand.Smart,
 			'ferrari': CarBrand.Ferrari,
-			'lamborghini': CarBrand.Lamborghini,
 			'maserati': CarBrand.Maserati,
 			'bentley': CarBrand.Bentley,
 			'rollsroyce': CarBrand.RollsRoyce,

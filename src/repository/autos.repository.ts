@@ -1,5 +1,5 @@
-import { VehiclesAutoLandInformation } from '../interface/autoland-provider.interface';
+import { AutolandSeminuevosModel } from '../models/autoland-seminuevos.model';
 
 export interface AutosRepository {
-	create(informationVehicule: VehiclesAutoLandInformation): Promise<any>;
+	create(request: AutolandSeminuevosModel): Promise<any>;
 }
