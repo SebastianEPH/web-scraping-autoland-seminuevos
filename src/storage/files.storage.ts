@@ -1,4 +1,4 @@
 export interface FilesStorage {
-	saveJson(fileName: string, object: object): void;
-	saveFile(fileName: string, content: string): void;
+	saveJson(directoryNames: string[], fileName: string, object: object): string;
+	saveFile(prefixPath: string[], fileName: string, content: string): string;
 }

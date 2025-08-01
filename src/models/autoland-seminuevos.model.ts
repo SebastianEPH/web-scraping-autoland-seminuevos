@@ -6,6 +6,23 @@ import {
 	EngineType,
 	TransmissionType,
 } from '../interface/database/vehicles-table.interface';
+import { AutolandUniqueInformation } from '../interface/autoland-unique.information.interface';
+
+interface ImagenProperties {
+	urlOriginal?: string;
+	urlSave?: string;
+	nameFile?: string;
+	extension?: string;
+}
+interface ImageData {
+	exterior: ImagenProperties[];
+	interior: ImagenProperties[];
+	information?: {
+		s3PRefix?: string;
+		exteriorLength: number;
+		interiorLength: number;
+	};
+}
 
 export class AutolandSeminuevosModel {
 	public codeUnique: string;
@@ -24,7 +41,18 @@ export class AutolandSeminuevosModel {
 	public transmissionType: TransmissionType;
 	public type: CarType;
 	public engineType: EngineType;
-
+	public image: ImageData;
+	constructor() {
+		this.image = {
+			exterior: [],
+			interior: [],
+			information: {
+				s3PRefix: '',
+				exteriorLength: 0,
+				interiorLength: 0,
+			},
+		};
+	}
 	public fromWeb({
 		placa,
 		nombre,
@@ -54,6 +82,12 @@ export class AutolandSeminuevosModel {
 		this.engineType = AutolandSeminuevosModel.mapEngineType(combustible);
 		this.codeUnique = this.generateCodeUnique();
 		return this;
+	}
+
+	public setImageExterior(information: AutolandUniqueInformation): void {
+		const cantidadDeImagenesExterior: number = information.info.options.numImgEC;
+
+		// this.image.exterior.add(imagenProperties);
 	}
 
 	private generateCodeUnique(): string {

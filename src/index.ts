@@ -8,11 +8,11 @@ Environment.load();
 
 const container: Container = createContainer();
 const isntancia = container.get<Controller>(TYPES.Handler);
-// isntancia.generateData();
+isntancia.generateData();
 
-isntancia.testSaveDatabase().catch((err) => {
-	console.log(err);
-});
+// isntancia.testSaveDatabase().catch((err) => {
+// 	console.log(err);
+// });
 
 // import { AutolandSeminuevosModel } from './models/autoland-seminuevos.model';
 // import { VehiclesAutoLandInformation } from './interface/autoland-provider.interface';

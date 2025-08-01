@@ -1,5 +1,5 @@
-import { AutolandSeminuevosModel } from '../models/autoland-seminuevos.model';
+import { VehiclesAutoLandInformation } from '../interface/autoland-provider.interface';
 
 export interface AutolandSeminuevosService {
-	proccess(autolandSeminuevos: AutolandSeminuevosModel): Promise<void>;
+	proccess(vehicle: VehiclesAutoLandInformation): Promise<void>;
 }

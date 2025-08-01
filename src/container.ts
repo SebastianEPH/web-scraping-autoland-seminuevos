@@ -1,21 +1,21 @@
-import { Container } from 'inversify';
-import { ApiConnectorUtil } from './utils/api-connector';
-import { TIMEOUT } from './common/enum';
-import { TAG } from './tag';
-import { AutolandProvider } from './provider/autoland-provider';
-import { AutolandProviderImpl } from './provider/impl/autoland-provider.impl';
-import { TYPES } from './type';
-import { Controller } from './controller/controller';
-import { WebScrapingService } from './service/web-scraping.service';
-import { WebScrapingServiceImpl } from './service/impl/web-scraping.service.impl';
-import { createPool, Pool } from 'mysql2/promise';
-import { Environment } from './utils/constants-env.util';
-import { AutosRepository } from './repository/autos.repository';
-import { AutosImplRepository } from './repository/impl/autos.impl.repository';
-import { AutolandSeminuevosService } from './service/autoland-seminuevos.service';
 import { AutolandSeminuevosServiceImpl } from './service/impl/autoland-seminuevos.service.impl';
-import { FilesStorage } from './storage/files.storage';
+import { WebScrapingServiceImpl } from './service/impl/web-scraping.service.impl';
+import { AutolandSeminuevosService } from './service/autoland-seminuevos.service';
+import { AutolandProviderImpl } from './provider/impl/autoland-provider.impl';
 import { FilesStorageLocalImpl } from './storage/impl/files.storage.local';
+import { AutosImplRepository } from './repository/impl/autos.impl.repository';
+import { WebScrapingService } from './service/web-scraping.service';
+import { AutolandProvider } from './provider/autoland-provider';
+import { AutosRepository } from './repository/autos.repository';
+import { Environment } from './utils/constants-env.util';
+import { FilesStorage } from './storage/files.storage';
+import { ApiConnectorUtil } from './utils/api-connector';
+import { Controller } from './controller/controller';
+import { createPool, Pool } from 'mysql2/promise';
+import { Container } from 'inversify';
+import { TIMEOUT } from './common/enum';
+import { TYPES } from './type';
+import { TAG } from './tag';
 
 export const createContainer = (): Container => {
 	const container: Container = new Container();
@@ -29,10 +29,13 @@ export const createContainer = (): Container => {
 		.bind<AutolandSeminuevosService>(TYPES.Service)
 		.to(AutolandSeminuevosServiceImpl)
 		.whenTargetNamed(TAG.Autoland);
-	container.bind<FilesStorage>(TYPES.Storage).to(FilesStorageLocalImpl); //.whenTargetNamed(TAG.Autoland);
+	container.bind<FilesStorage>(TYPES.Storage).to(FilesStorageLocalImpl);
 
-	container.bind<string>(TYPES.Storage).toConstantValue('/rutaa').whenTargetNamed(TAG.StorageLocal);
-	container.bind<string>(TYPES.Storage).toConstantValue('/rutaa/new').whenTargetNamed(TAG.StorageBackblazeB2);
+	container.bind<string[]>(TYPES.StorageSubPath).toConstantValue(['localStorage']).whenTargetNamed(TAG.StorageLocal);
+	container
+		.bind<string[]>(TYPES.StorageSubPath)
+		.toConstantValue(['rutaa', 'blackBlas'])
+		.whenTargetNamed(TAG.StorageBackblazeB2);
 
 	container
 		.bind<ApiConnectorUtil>(TYPES.ApiConnectorUtil)

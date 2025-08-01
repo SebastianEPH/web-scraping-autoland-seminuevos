@@ -6,12 +6,11 @@ import { AutolandProvider } from '../../provider/autoland-provider';
 import { VehiclesAutoLandInformation } from '../../interface/autoland-provider.interface';
 import { AutosRepository } from '../../repository/autos.repository';
 import { TAG } from '../../tag';
-import { AutolandSeminuevosModel } from '../../models/autoland-seminuevos.model';
 import { AutolandSeminuevosService } from '../autoland-seminuevos.service';
 
 @injectable()
 export class WebScrapingServiceImpl implements WebScrapingService {
-	private readonly limit = promiseLimit(3);
+	private readonly limit = promiseLimit(2);
 
 	constructor(
 		@inject(TYPES.AutolandProvider) private autoland: AutolandProvider,
@@ -26,9 +25,7 @@ export class WebScrapingServiceImpl implements WebScrapingService {
 
 		const promiseVehiclesList: Promise<unknown>[] = vehiclesList.map((vehicle: VehiclesAutoLandInformation) => {
 			return this.limit(() => {
-				const autoLandSeminuevo = new AutolandSeminuevosModel();
-				autoLandSeminuevo.fromWeb(vehicle);
-				return this.serviceAutoland.proccess(autoLandSeminuevo);
+				return this.serviceAutoland.proccess(vehicle);
 			});
 		});
 		await Promise.all(promiseVehiclesList);
