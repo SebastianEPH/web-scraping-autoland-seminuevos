@@ -5,5 +5,6 @@ export const TAG = {
 
 	StorageLocal: 'StorageLocal',
 	StorageBackblazeB2: 'StorageBackblazeB2',
-	AUTO: 'AUTO',
+	vehicle: 'vehicle',
+	brand: 'brand',
 };

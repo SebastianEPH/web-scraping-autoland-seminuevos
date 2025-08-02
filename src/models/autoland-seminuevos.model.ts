@@ -6,7 +6,6 @@ import {
 	EngineType,
 	TransmissionType,
 } from '../interface/database/vehicles-table.interface';
-import { AutolandUniqueInformation } from '../interface/autoland-unique.information.interface';
 
 export interface ImagenProperties {
 	urlOriginal?: string;
@@ -33,6 +32,7 @@ export class AutolandSeminuevosModel {
 	public url?: string;
 	public urlImg?: string;
 	public brand: CarBrand;
+	public brandId?: number;
 	public transmissionType: TransmissionType;
 	public type: CarType;
 	public engineType: EngineType;
@@ -74,15 +74,9 @@ export class AutolandSeminuevosModel {
 		return this;
 	}
 
-	public setImageExterior(information: AutolandUniqueInformation): void {
-		const cantidadDeImagenesExterior: number = information.info.options.numImgEC;
-
-		// this.image.exterior.add(imagenProperties);
-	}
-
 	private generateCodeUnique(): string {
 		return AutolandSeminuevosModel.superCleanText(
-			`${this.brand}-${this.name}-${this.modelYear}-${this.transmissionType}-${this.isUsed}-${this.milage}`.toUpperCase(),
+			`${this.brand}-${this.name}-${this.modelYear}-${this.transmissionType}-${this.isUsed}-${this.priceDollar}`.toUpperCase(),
 		);
 	}
 

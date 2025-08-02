@@ -1,6 +1,7 @@
 import { FILTER_SORT } from '../common/database.enum';
 import { queryCommons } from '../common/query.commons';
 import { Column, POSITION } from '../common/enum';
+import { PrepareQuery, QueryDatabaseUtil, QueryInterface } from './database/query.database.util';
 
 export class DatabaseUtil {
 	public static filterSortDate(tableName: string, sort: FILTER_SORT): string {
@@ -62,7 +63,7 @@ export class DatabaseUtil {
 				queryUtil?.names.push(keyValuePair[POSITION.FIRST]);
 				queryUtil?.interrogation.push('?');
 				if (typeof keyValuePair[POSITION.SECOND] === 'string') {
-					queryUtil?.params.push(keyValuePair[POSITION.SECOND]?.trim().toLocaleLowerCase());
+					queryUtil?.params.push(keyValuePair[POSITION.SECOND]);
 					return;
 				}
 				if (typeof keyValuePair[POSITION.SECOND] === 'object') {
@@ -73,6 +74,15 @@ export class DatabaseUtil {
 			});
 		console.log('queryUtil', queryUtil);
 		return queryUtil;
+	}
+
+	public static createPrepare(tableName: string, keyValue: KeyValuePair[]): PrepareQuery {
+		const queryFieldInformation: QueryFieldInformation = DatabaseUtil.getFieldInformation(keyValue);
+		const queryInterface: QueryInterface = QueryDatabaseUtil.insert(tableName, queryFieldInformation);
+		return {
+			queryInterface,
+			queryFieldInformation,
+		};
 	}
 }
 

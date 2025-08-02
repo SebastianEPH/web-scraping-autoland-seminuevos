@@ -7,8 +7,8 @@ import { AutolandUniqueInformation } from '../../interface/autoland-unique.infor
 import { FilesStorage } from '../../storage/files.storage';
 import { VehiclesAutoLandInformation } from '../../interface/autoland-provider.interface';
 import { HTTP } from '../../common/enum';
-import { TAG } from '../../tag';
-import { AutosRepository } from '../../repository/autos.repository';
+
+import { VehiclesRepository } from '../../repository/vehicles.repository';
 
 @injectable()
 export class AutolandSeminuevosServiceImpl implements AutolandSeminuevosService {
@@ -20,7 +20,7 @@ export class AutolandSeminuevosServiceImpl implements AutolandSeminuevosService 
 	public vehicleProviderInformation: AutolandUniqueInformation;
 
 	constructor(
-		@inject(TYPES.Repository) @named(TAG.AUTO) private repositoryAutos: AutosRepository,
+		@inject(TYPES.Repository) private repositoryAutos: VehiclesRepository,
 		@inject(TYPES.AutolandProvider) private autolandProvider: AutolandProvider,
 		@inject(TYPES.Storage) private storage: FilesStorage,
 	) {}
@@ -83,7 +83,7 @@ export class AutolandSeminuevosServiceImpl implements AutolandSeminuevosService 
 	}
 
 	public async saveDataInDatabase(): Promise<void> {
-		const responseDatabase = await this.repositoryAutos.create(this.autoLandSeminuevo);
+		const responseDatabase = await this.repositoryAutos.saveDataVehicle(this.autoLandSeminuevo);
 	}
 
 	public async processImagesInterior(): Promise<void> {

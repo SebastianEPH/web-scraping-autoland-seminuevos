@@ -21,7 +21,7 @@ export class QueryDatabaseUtil {
 		if (values.length === NUM.ONE) return `'${values[POSITION.FIRST]}'`;
 		return values.map((value: string): string => `'${value?.trim()}'`).join(', ');
 	}
-	public static insert(nameTable: string, { names, interrogation, params }: QueryFieldInformation): queryInterface {
+	public static insert(nameTable: string, { names, interrogation, params }: QueryFieldInformation): QueryInterface {
 		const query: string = `INSERT INTO ${nameTable} (${names})
 			VALUES (${interrogation}); `;
 		const queryWithParams: string = `INSERT INTO ${nameTable} (${names})	VALUES (${params}); `;
@@ -33,7 +33,7 @@ export class QueryDatabaseUtil {
 			queryWithParams,
 		};
 	}
-	public static delete(nameTable: string, { names, interrogation, params }: QueryFieldInformation): queryInterface {
+	public static delete(nameTable: string, { names, interrogation, params }: QueryFieldInformation): QueryInterface {
 		let condition: string[] = [];
 		let conditionWithParams: string[] = [];
 		names.forEach((name: string, index: number): void => {
@@ -59,7 +59,11 @@ export interface QueryFieldInformation {
 	interrogation: string[];
 }
 
-export interface queryInterface {
+export interface QueryInterface {
 	query: string;
 	queryWithParams: string;
+}
+export interface PrepareQuery {
+	queryFieldInformation: QueryFieldInformation;
+	queryInterface: QueryInterface;
 }

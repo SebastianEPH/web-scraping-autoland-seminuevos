@@ -33,6 +33,7 @@ export class WebScrapingServiceImpl implements WebScrapingService {
 				// return this.serviceAutoland.proccess(vehicle);
 			});
 		});
+		console.log(`Lista comppeta son '${promiseVehiclesList.length}' de recursos a procesar`);
 		await Promise.all(promiseVehiclesList);
 
 		// await this.serviceAutoland.proccess( {

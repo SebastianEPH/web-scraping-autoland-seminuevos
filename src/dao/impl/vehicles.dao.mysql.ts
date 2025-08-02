@@ -1,18 +1,17 @@
-import { AutosRepository } from '../autos.repository';
-import { Pool } from 'mysql2/promise';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../type';
-import { Column } from '../../common/enum';
+import { VehiclesDao } from '../vehicles.dao';
 import { KeyValuePair } from '../../interface/database.interface';
-import { DatabaseCreate } from '../../decorator/database.decorator';
-import { DatabaseQueryResult } from '../../models/database.interface';
+import { Column } from '../../common/enum';
+import { TYPES } from '../../type';
+import { Pool } from 'mysql2/promise';
 import { AutolandSeminuevosModel } from '../../models/autoland-seminuevos.model';
+import { DatabaseCreate } from '../../decorator/database.decorator';
+import { DatabaseUtil } from '../../utils/database.util';
+import { DatabaseQueryResult } from '../../models/database.interface';
 
 @injectable()
-export class AutosImplRepository implements AutosRepository {
-	public static readonly TABLE_NAME: string = 'vehicles';
-
-	private readonly tableName: string = AutosImplRepository.TABLE_NAME;
+export class VehiclesDaoMysql implements VehiclesDao {
+	private readonly tableName: string = 'vehicles';
 
 	constructor(
 		@inject(TYPES.DatabaseClient)
@@ -20,7 +19,7 @@ export class AutosImplRepository implements AutosRepository {
 	) {}
 
 	@DatabaseCreate
-	async create<T>(request: AutolandSeminuevosModel): Promise<DatabaseQueryResult> {
+	public async create(request: AutolandSeminuevosModel): Promise<any> {
 		const keyValue: KeyValuePair[] = [
 			[Column.codeUnique, request?.codeUnique],
 			[Column.name, request.name],
@@ -37,11 +36,11 @@ export class AutosImplRepository implements AutosRepository {
 			[Column.transmissionType, request.transmissionType],
 			[Column.engineType, request.engineType],
 			[Column.type, request.type],
-			// /Soles y brandsId no están en el modelo pero sí en la tabla
-			// [Column.priceSoles, request.priceSoles || 0], // Valor por defecto
-			[Column.brandsId, null], // Debes obtener este valor de alguna relación
+			[Column.brandsId, request?.brandId],
 		];
-		console.log('keyValue: ', keyValue);
-		return keyValue as any;
+		const { queryFieldInformation, queryInterface } = DatabaseUtil.createPrepare(this.tableName, keyValue);
+		const [rows] = await this.database.query(queryInterface.query, queryFieldInformation.params);
+		const { insertId } = new DatabaseQueryResult(rows);
+		return insertId;
 	}
 }

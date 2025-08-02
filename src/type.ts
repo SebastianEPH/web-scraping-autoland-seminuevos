@@ -6,6 +6,7 @@ export const TYPES = {
 	Handler: Symbol.for('Handler'),
 	Service: Symbol.for('Service'),
 	Storage: Symbol.for('Storage'),
+	DAO: Symbol.for('DAO'),
 	StorageSubPath: Symbol.for('StorageSubPath'),
 	DatabaseClient: Symbol.for('DatabaseClient'),
 };

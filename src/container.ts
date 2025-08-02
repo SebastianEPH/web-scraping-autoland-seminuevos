@@ -3,10 +3,10 @@ import { WebScrapingServiceImpl } from './service/impl/web-scraping.service.impl
 import { AutolandSeminuevosService } from './service/autoland-seminuevos.service';
 import { AutolandProviderImpl } from './provider/impl/autoland-provider.impl';
 import { FilesStorageLocalImpl } from './storage/impl/files.storage.local';
-import { AutosImplRepository } from './repository/impl/autos.impl.repository';
+import { VehiclesRepositoryMysqlImpl } from './repository/impl/vehicles.repository.mysql.impl';
 import { WebScrapingService } from './service/web-scraping.service';
 import { AutolandProvider } from './provider/autoland-provider';
-import { AutosRepository } from './repository/autos.repository';
+import { VehiclesRepository } from './repository/vehicles.repository';
 import { Environment } from './utils/constants-env.util';
 import { FilesStorage } from './storage/files.storage';
 import { ApiConnectorUtil } from './utils/api-connector';
@@ -16,6 +16,10 @@ import { Container, interfaces } from 'inversify';
 import { TIMEOUT } from './common/enum';
 import { TYPES } from './type';
 import { TAG } from './tag';
+import { VehiclesDaoMysql } from './dao/impl/vehicles.dao.mysql';
+import { VehiclesDao } from './dao/vehicles.dao';
+import { BrandsDaoMysql } from './dao/impl/brands.dao.mysql';
+import { BrandsDao } from './dao/brands.dao';
 
 export const createContainer = (): Container => {
 	const container: Container = new Container();
@@ -23,8 +27,6 @@ export const createContainer = (): Container => {
 		host: `https://autoland.com.pe`,
 		timeout: TIMEOUT.PROVIDER,
 	});
-	/* Repository */
-	container.bind<AutosRepository>(TYPES.Repository).to(AutosImplRepository).whenTargetNamed(TAG.AUTO);
 
 	container.bind<Controller>(TYPES.Handler).to(Controller);
 	container.bind<WebScrapingService>(TYPES.Service).to(WebScrapingServiceImpl).whenTargetNamed(TAG.WebScraping);
@@ -33,7 +35,8 @@ export const createContainer = (): Container => {
 		.toFactory<AutolandSeminuevosService>((context: interfaces.Context) => {
 			return () => {
 				return new AutolandSeminuevosServiceImpl(
-					context.container.getNamed<AutosRepository>(TYPES.Repository, TAG.AUTO),
+					// context.container.getNamed<VehiclesRepository>(TYPES.Repository, TAG.AUTO),
+					context.container.get<VehiclesRepository>(TYPES.Repository),
 					context.container.get<AutolandProvider>(TYPES.AutolandProvider),
 					context.container.get<FilesStorage>(TYPES.Storage),
 				);
@@ -53,6 +56,13 @@ export const createContainer = (): Container => {
 		.toConstantValue(apiConnectorAutolandSeminuevos)
 		.whenTargetNamed(TAG.Autoland);
 	container.bind<AutolandProvider>(TYPES.AutolandProvider).to(AutolandProviderImpl);
+
+	/* Repository */
+	container.bind<VehiclesRepository>(TYPES.Repository).to(VehiclesRepositoryMysqlImpl);
+
+	/* Dao */
+	container.bind<VehiclesDao>(TYPES.DAO).to(VehiclesDaoMysql).whenTargetNamed(TAG.vehicle);
+	container.bind<BrandsDao>(TYPES.DAO).to(BrandsDaoMysql).whenTargetNamed(TAG.brand);
 
 	/* Database */
 	const connection: Pool = createPool({

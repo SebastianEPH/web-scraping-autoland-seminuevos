@@ -1,5 +1,5 @@
 import { AutolandSeminuevosModel } from '../models/autoland-seminuevos.model';
 
-export interface AutosRepository {
+export interface VehiclesDao {
 	create(request: AutolandSeminuevosModel): Promise<any>;
 }
